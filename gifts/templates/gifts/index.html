@@ -565,7 +565,9 @@
           class="glass gift-card {{ gift.status }}"
           id="gc-{{ gift.id }}"
           data-status="{{ gift.status }}"
-          data-purchase-link="{{ gift.purchase_link|escapejs }}"
+          data-purchase-link="{{ gift.purchase_link }}"
+          data-store-logo="{% if gift.store and gift.store.logo %}{{ gift.store.logo.url }}{% endif %}"
+          data-store-name="{{ gift.store.name|default:'' }}"
           onclick="handleCardClick({{ gift.id }}, '{{ gift.name|escapejs }}', '{{ gift.status }}', '{{ gift.image_url|escapejs }}', '{{ gift.price_range|escapejs }}')"
         >
           <div class="card-img-wrap">
@@ -687,7 +689,7 @@
 
         <div class="modal-actions">
           <button class="btn-cancel-res" id="btn-cancel-res-btn" onclick="cancelReservation()">Cancelar Reserva</button>
-          <button class="btn-close" onclick="closeModal()">Finalizar</button>
+          <button class="btn-close" onclick="closeModal()">Fechar</button>
         </div>
       </div>
 
@@ -773,11 +775,19 @@
 
         const logoImg      = document.getElementById('store-logo-img');
         const nameFallback = document.getElementById('store-name-fallback');
-        logoImg.style.display = 'none';
-        let storeName = 'Ver produto';
-        try { if (link) storeName = new URL(link).hostname.replace('www.', ''); } catch (e) {}
-        nameFallback.textContent = storeName;
-        nameFallback.style.display = '';
+        const storeLogoUrl = card?.dataset.storeLogo || '';
+        const storeName    = card?.dataset.storeName  || '';
+
+        if (storeLogoUrl) {
+          logoImg.src = storeLogoUrl;
+          logoImg.alt = storeName || 'Loja';
+          logoImg.style.display = '';
+          nameFallback.style.display = 'none';
+        } else {
+          logoImg.style.display = 'none';
+          nameFallback.textContent = storeName || 'Ver produto';
+          nameFallback.style.display = '';
+        }
         document.getElementById('store-link').href = link || '#';
 
         document.getElementById('sp2-reserved-notice').style.display = 'flex';
