@@ -11,7 +11,7 @@
   <style>
     /* ─── Variables ─── */
     :root {
-      --bg:           #C8DFD3;
+      --bg:           #ffffff;
       --rose:         #2A5240;
       --violet:       #4E8F6A;
       --green:        #2A5240;
@@ -28,40 +28,25 @@
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
     body {
-      background: var(--bg);
+      background: transparent;
       color: var(--text);
       font-family: 'Inter', sans-serif;
       min-height: 100dvh;
       overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(ellipse at 50% 42%, #B2D4BE 0%, #ffffff 68%);
     }
     img { display:block; }
     button { font-family:inherit; }
     a { text-decoration:none; }
 
     /* ─── Aurora ─── */
-    .aurora { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-    .aurora-orb { position:absolute; border-radius:50%; filter:blur(80px); will-change:transform; }
-    .aurora-orb-1 {
-      width:90vw; height:90vw;
-      background: radial-gradient(circle, rgba(80,160,115,0.55) 0%, transparent 70%);
-      top:-30%; left:-25%;
-      animation: orb1 14s ease-in-out infinite alternate;
-    }
-    .aurora-orb-2 {
-      width:75vw; height:75vw;
-      background: radial-gradient(circle, rgba(110,185,145,0.50) 0%, transparent 70%);
-      bottom:-20%; right:-20%;
-      animation: orb2 18s ease-in-out infinite alternate;
-    }
-    .aurora-orb-3 {
-      width:60vw; height:60vw;
-      background: radial-gradient(circle, rgba(55,130,90,0.45) 0%, transparent 70%);
-      top:35%; left:25%;
-      animation: orb3 22s ease-in-out infinite alternate;
-    }
-    @keyframes orb1 { to { transform: translate(18%,12%) scale(1.15); } }
-    @keyframes orb2 { to { transform: translate(-12%,-18%) scale(0.88); } }
-    @keyframes orb3 { to { transform: translate(-22%,15%) scale(1.25); } }
+    .aurora { display: none; }
 
     /* ─── Glass ─── */
     .glass {
