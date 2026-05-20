@@ -1,0 +1,242 @@
+[
+  {
+    "model": "gifts.gift",
+    "pk": 1,
+    "fields": {
+      "name": "Air Fryer",
+      "description": "Fritadeira elétrica sem óleo para uma cozinha mais saudável",
+      "image_url": "https://images.unsplash.com/photo-1644065083767-cd0b7e56b4e4?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/air-fryer",
+      "price_range": "R$ 200 – 450",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 1,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 2,
+    "fields": {
+      "name": "Cafeteira Expresso",
+      "description": "Para começar os dias com um café especial",
+      "image_url": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/cafeteira-expresso",
+      "price_range": "R$ 180 – 500",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 2,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 3,
+    "fields": {
+      "name": "Jogo de Panelas",
+      "description": "Conjunto completo para o dia a dia na cozinha",
+      "image_url": "https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/jogo-de-panelas",
+      "price_range": "R$ 150 – 400",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 3,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 4,
+    "fields": {
+      "name": "Jogo de Cama Queen",
+      "description": "Lençol, fronhas e cobre-leito para o quarto dos sonhos",
+      "image_url": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/jogo-de-cama-queen",
+      "price_range": "R$ 120 – 320",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 4,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 5,
+    "fields": {
+      "name": "Jogo de Toalhas",
+      "description": "Toalhas de banho macias e absorventes para o banheiro",
+      "image_url": "https://images.unsplash.com/photo-1600369672770-985fd30004eb?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/jogo-de-toalhas-de-banho",
+      "price_range": "R$ 80 – 220",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 5,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 6,
+    "fields": {
+      "name": "Liquidificador",
+      "description": "Potente para sucos, vitaminas e molhos",
+      "image_url": "https://images.unsplash.com/photo-1619067436870-e4f36a4dfb5f?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/liquidificador",
+      "price_range": "R$ 80 – 250",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 6,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 7,
+    "fields": {
+      "name": "Micro-ondas",
+      "description": "Essencial para o dia a dia da nova casa",
+      "image_url": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/micro-ondas",
+      "price_range": "R$ 300 – 650",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 7,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 8,
+    "fields": {
+      "name": "Jogo de Pratos",
+      "description": "Aparelho de jantar para 6 pessoas — ideal para receber amigos",
+      "image_url": "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/jogo-de-pratos",
+      "price_range": "R$ 90 – 250",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 8,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 9,
+    "fields": {
+      "name": "Conjunto de Taças",
+      "description": "Taças de vinho e copos para celebrar os momentos especiais",
+      "image_url": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/conjunto-de-tacas",
+      "price_range": "R$ 70 – 200",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 9,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 10,
+    "fields": {
+      "name": "Tapete para Sala",
+      "description": "Para aconchegar e decorar o espaço de convivência",
+      "image_url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/tapete-sala",
+      "price_range": "R$ 120 – 450",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 10,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 11,
+    "fields": {
+      "name": "Espelho Decorativo",
+      "description": "Toque elegante para qualquer ambiente da casa",
+      "image_url": "https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/espelho-decorativo",
+      "price_range": "R$ 80 – 350",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 11,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 12,
+    "fields": {
+      "name": "Ferro de Passar",
+      "description": "Com vapor para facilitar o cuidado das roupas",
+      "image_url": "https://images.unsplash.com/photo-1558618047-3b3cbc72c4d0?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/ferro-de-passar-roupa",
+      "price_range": "R$ 80 – 200",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 12,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 13,
+    "fields": {
+      "name": "Churrasqueira Elétrica",
+      "description": "Para os churrascos em família no novo lar",
+      "image_url": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/churrasqueira-eletrica",
+      "price_range": "R$ 150 – 400",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 13,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 14,
+    "fields": {
+      "name": "Quadro Decorativo",
+      "description": "Arte para personalizar e dar vida às paredes",
+      "image_url": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/quadro-decorativo",
+      "price_range": "R$ 60 – 250",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 14,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gifts.gift",
+    "pk": 15,
+    "fields": {
+      "name": "Kit Organização Cozinha",
+      "description": "Potes herméticos, porta-temperos e organizadores",
+      "image_url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=400&fit=crop&auto=format",
+      "purchase_link": "https://www.americanas.com.br/busca/kit-organizacao-cozinha",
+      "price_range": "R$ 80 – 200",
+      "is_purchased": false,
+      "purchased_by": "",
+      "purchased_at": null,
+      "order": 15,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]

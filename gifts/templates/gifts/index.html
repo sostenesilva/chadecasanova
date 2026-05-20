@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#C8DFD3">
+  <title>Chá de Casa Nova · Sóstenes &amp; Emilly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&family=Italianno&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Variables ─── */
+    :root {
+      --bg:           #C8DFD3;
+      --rose:         #2A5240;
+      --violet:       #4E8F6A;
+      --green:        #2A5240;
+      --blue:         #7AAF92;
+      --gold:         #5C4020;
+      --text:         #1A3226;
+      --muted:        rgba(26,50,38,0.52);
+      --glass-bg:     rgba(240,252,246,0.78);
+      --glass-border: rgba(42,82,64,0.2);
+      --glass-shadow: 0 8px 32px rgba(20,55,35,0.14);
+    }
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; -webkit-tap-highlight-color:transparent; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+    img { display:block; }
+    button { font-family:inherit; }
+    a { text-decoration:none; }
+
+    /* ─── Aurora ─── */
+    .aurora { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .aurora-orb { position:absolute; border-radius:50%; filter:blur(80px); will-change:transform; }
+    .aurora-orb-1 {
+      width:90vw; height:90vw;
+      background: radial-gradient(circle, rgba(80,160,115,0.55) 0%, transparent 70%);
+      top:-30%; left:-25%;
+      animation: orb1 14s ease-in-out infinite alternate;
+    }
+    .aurora-orb-2 {
+      width:75vw; height:75vw;
+      background: radial-gradient(circle, rgba(110,185,145,0.50) 0%, transparent 70%);
+      bottom:-20%; right:-20%;
+      animation: orb2 18s ease-in-out infinite alternate;
+    }
+    .aurora-orb-3 {
+      width:60vw; height:60vw;
+      background: radial-gradient(circle, rgba(55,130,90,0.45) 0%, transparent 70%);
+      top:35%; left:25%;
+      animation: orb3 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb1 { to { transform: translate(18%,12%) scale(1.15); } }
+    @keyframes orb2 { to { transform: translate(-12%,-18%) scale(0.88); } }
+    @keyframes orb3 { to { transform: translate(-22%,15%) scale(1.25); } }
+
+    /* ─── Glass ─── */
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      box-shadow: var(--glass-shadow);
+    }
+    .glass-inner {
+      background: rgba(220,245,232,0.55);
+      border: 1px solid rgba(42,82,64,0.18);
+    }
+
+    /* ─── Page ─── */
+    .page { position:relative; z-index:1; }
+
+    /* ─── Hero ─── */
+    .hero {
+      min-height: 100dvh;
+      display: flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center;
+      padding: 3rem 1.5rem 5rem;
+      gap: 1.75rem; position:relative;
+    }
+    .hero-eyebrow {
+      font-size:.62rem; letter-spacing:.35em;
+      text-transform:uppercase; color:var(--rose); font-weight:500;
+    }
+    .couple-names {
+      font-family:'Italianno', cursive;
+      font-size: clamp(6rem,11vw,6.5rem);
+      font-weight:400; line-height:0.5;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .couple-names .amp {
+      display:block;
+      color:var(--rose); font-size:.65em; line-height:1.35;
+    }
+    .hero-tagline {
+      font-family:'Cormorant Garamond',serif;
+      font-style:italic;
+      font-size: clamp(.95rem,3.5vw,1.25rem);
+      color:var(--muted); max-width:300px; line-height:1.6;
+    }
+    .event-pill {
+      border-radius:100px; padding:.55rem 1.4rem;
+      font-size:.72rem; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--violet);
+    }
+
+    /* Countdown */
+    .countdown { display:flex; gap:.75rem; }
+    .cd-item {
+      display:flex; flex-direction:column; align-items:center;
+      padding:.7rem .9rem; min-width:58px; border-radius:16px;
+    }
+    .cd-value {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2rem; font-weight:500; line-height:1;
+      background: linear-gradient(135deg,var(--rose),var(--violet));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .cd-label {
+      font-size:.52rem; letter-spacing:.22em;
+      text-transform:uppercase; color:var(--muted); margin-top:.25rem;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position:absolute; bottom:1.75rem; left:50%;
+      transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:.4rem;
+      color:var(--muted); font-size:.58rem;
+      letter-spacing:.2em; text-transform:uppercase;
+      animation: nudge 2.4s ease-in-out infinite;
+    }
+    @keyframes nudge {
+      0%,100% { transform:translateX(-50%) translateY(0);  }
+      55%      { transform:translateX(-50%) translateY(7px); }
+    }
+
+    /* ─── Gifts Section ─── */
+    .gifts-section { padding:3rem 1.25rem 5rem; max-width:940px; margin:0 auto; }
+    .section-header { text-align:center; margin-bottom:2.5rem; }
+    .divider {
+      width:36px; height:1px;
+      background: linear-gradient(90deg,transparent,var(--rose),transparent);
+      margin:0 auto 1.25rem;
+    }
+    .section-eyebrow {
+      font-size:.6rem; letter-spacing:.32em;
+      text-transform:uppercase; color:var(--rose); margin-bottom:.65rem;
+    }
+    .section-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size: clamp(1.8rem,5vw,3rem);
+      font-weight:300; line-height:1.15;
+    }
+    .section-sub { font-size:.82rem; color:var(--muted); margin-top:.55rem; line-height:1.65; }
+
+    /* Stats */
+    .stats { display:flex; justify-content:center; gap:2rem; margin-bottom:2.25rem; }
+    .stat-val {
+      font-family:'Cormorant Garamond',serif;
+      font-size:2rem; font-weight:300; line-height:1;
+      background: linear-gradient(135deg,var(--rose),var(--violet));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .stat-lbl {
+      font-size:.58rem; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--muted); margin-top:.2rem; text-align:center;
+    }
+
+    /* Filter tabs */
+    .filters { display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+    .f-tab {
+      padding:.38rem 1.1rem; border-radius:100px;
+      font-size:.72rem; letter-spacing:.04em;
+      cursor:pointer; border:1px solid var(--glass-border);
+      background:transparent; color:var(--muted);
+      transition:all .2s ease; backdrop-filter:blur(12px);
+    }
+    .f-tab:hover, .f-tab.active {
+      background:rgba(42,82,64,.2);
+      border-color:rgba(42,82,64,.5);
+      color:var(--rose);
+    }
+
+    /* ─── Gift Grid ─── */
+    .gift-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+    @media (min-width:560px) { .gift-grid { grid-template-columns:repeat(3,1fr); } }
+
+    /* ─── Gift Card ─── */
+    .gift-card {
+      border-radius:20px; overflow:hidden;
+      transition:transform .3s ease, box-shadow .3s ease, opacity .3s ease;
+      opacity:0; animation:fadeUp .5s ease forwards;
+      cursor:pointer;
+    }
+    .gift-card.available:hover {
+      transform:translateY(-5px);
+      box-shadow:0 24px 48px rgba(20,55,35,.28), 0 0 40px rgba(42,82,64,.22);
+    }
+    .gift-card.reserved,
+    .gift-card.purchased { opacity:.75; cursor:pointer; }
+
+    /* Stagger */
+    .gift-card:nth-child(1)  { animation-delay:.05s } .gift-card:nth-child(2)  { animation-delay:.1s  }
+    .gift-card:nth-child(3)  { animation-delay:.15s } .gift-card:nth-child(4)  { animation-delay:.2s  }
+    .gift-card:nth-child(5)  { animation-delay:.25s } .gift-card:nth-child(6)  { animation-delay:.3s  }
+    .gift-card:nth-child(7)  { animation-delay:.35s } .gift-card:nth-child(8)  { animation-delay:.4s  }
+    .gift-card:nth-child(9)  { animation-delay:.45s } .gift-card:nth-child(10) { animation-delay:.5s  }
+    .gift-card:nth-child(11) { animation-delay:.55s } .gift-card:nth-child(12) { animation-delay:.6s  }
+    .gift-card:nth-child(13) { animation-delay:.65s } .gift-card:nth-child(14) { animation-delay:.7s  }
+    .gift-card:nth-child(15) { animation-delay:.75s }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0);    }
+    }
+
+    .card-img-wrap { position:relative; aspect-ratio:1/1; overflow:hidden; }
+    .card-img-wrap img {
+      width:100%; height:100%; object-fit:cover; transition:transform .4s ease;
+    }
+    .gift-card.available:hover .card-img-wrap img { transform:scale(1.06); }
+    .card-img-wrap::after {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(26,50,38,.55));
+    }
+    .gift-card.reserved  .card-img-wrap::before,
+    .gift-card.purchased .card-img-wrap::before {
+      content:''; position:absolute; inset:0; z-index:1; background:rgba(180,220,200,.38);
+    }
+
+    /* Badges */
+    .badge-status {
+      position:absolute; top:.55rem; right:.55rem; z-index:2;
+      padding:.2rem .55rem; border-radius:100px;
+      font-size:.58rem; letter-spacing:.05em;
+      backdrop-filter:blur(12px);
+    }
+    .badge-status.reserved,
+    .badge-status.purchased {
+      background:rgba(80,130,95,.15); border:1px solid rgba(80,130,95,.35);
+      color:var(--green);
+    }
+
+    /* Card body */
+    .card-body { padding:.75rem .8rem .8rem; }
+    .card-name  { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:500; line-height:1.2; margin-bottom:.2rem; }
+    .card-price { font-size:.68rem; color:var(--violet); margin-bottom:.45rem; }
+    .card-buyer { font-size:.62rem; color:var(--gold); font-style:italic; margin-bottom:.45rem; }
+
+    .btn-buy {
+      width:100%; padding:.52rem;
+      border-radius:10px;
+      background: linear-gradient(135deg, rgba(42,82,64,.22), rgba(78,143,106,.15));
+      border:1px solid rgba(42,82,64,.4);
+      color:var(--rose); font-size:.68rem; font-weight:500;
+      letter-spacing:.03em; cursor:pointer; transition:all .2s ease;
+    }
+    .btn-buy:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(42,82,64,.35), rgba(78,143,106,.25));
+      border-color:rgba(42,82,64,.62);
+    }
+    .btn-buy:disabled {
+      cursor:pointer; font-size:.64rem;
+      background:rgba(42,82,64,.12);
+      border-color:rgba(42,82,64,.2);
+      color:var(--muted);
+    }
+
+    /* Empty state */
+    .empty-state { grid-column:1/-1; padding:3rem; text-align:center; color:var(--muted); border-radius:20px; }
+
+    /* ─── Modal ─── */
+    .modal-overlay {
+      position:fixed; inset:0; z-index:200;
+      background:rgba(160,210,185,.90); backdrop-filter:blur(14px);
+      display:flex; align-items:flex-end; justify-content:center;
+      padding:1rem; opacity:0; pointer-events:none; transition:opacity .3s ease;
+    }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    @media (min-width:480px) { .modal-overlay { align-items:center; } }
+
+    .modal {
+      width:100%; max-width:420px; padding:1.75rem;
+      border-radius:24px;
+      transform:translateY(48px);
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+      max-height:90dvh; overflow-y:auto;
+    }
+    .modal-overlay.open .modal { transform:translateY(0); }
+
+    /* ─── Step indicator ─── */
+    .steps-bar {
+      display:flex; align-items:flex-start;
+      justify-content:center; margin-bottom:1.5rem;
+    }
+    .step-item { display:flex; flex-direction:column; align-items:center; gap:.3rem; }
+    .step-num {
+      width:28px; height:28px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.68rem; font-weight:600;
+      border:1px solid rgba(42,82,64,.3);
+      color:rgba(42,82,64,.45);
+      transition:all .3s ease;
+    }
+    .step-item.active .step-num {
+      background: linear-gradient(135deg, rgba(42,82,64,.32), rgba(78,143,106,.2));
+      border-color:rgba(42,82,64,.7); color:var(--green);
+      box-shadow:0 0 14px rgba(42,82,64,.28);
+    }
+    .step-item.done .step-num {
+      background:rgba(42,82,64,.18);
+      border-color:rgba(42,82,64,.45);
+      color:rgba(42,82,64,.85);
+    }
+    .step-lbl {
+      font-size:.5rem; letter-spacing:.1em;
+      text-transform:uppercase; color:rgba(42,82,64,.4); white-space:nowrap;
+    }
+    .step-item.active .step-lbl, .step-item.done .step-lbl { color:rgba(42,82,64,.9); }
+    .step-conn {
+      height:1px; background:rgba(42,82,64,.2);
+      width:38px; margin:14px 5px 0;
+      transition:background .3s ease; flex-shrink:0;
+    }
+    .step-conn.active { background:rgba(42,82,64,.58); }
+
+    /* ─── Modal gift preview ─── */
+    .modal-gift-preview {
+      display:flex; align-items:center; gap:.85rem;
+      padding:.6rem .75rem; border-radius:14px; margin-bottom:1.25rem;
+    }
+    .modal-gift-img-thumb {
+      width:58px; height:58px; border-radius:10px;
+      object-fit:cover; flex-shrink:0;
+      border:1px solid var(--glass-border);
+    }
+    .modal-gift-name-display {
+      font-family:'Cormorant Garamond',serif;
+      font-size:1rem; font-weight:500; line-height:1.2;
+    }
+    .modal-gift-price-display {
+      font-size:.68rem; color:var(--violet); margin-top:.2rem;
+    }
+
+    .modal.view-only .steps-bar { display:none; }
+
+    /* ─── Reserved notice (view-only) ─── */
+    .reserved-notice {
+      display:flex; align-items:flex-start; gap:.75rem;
+      padding:.85rem 1rem; border-radius:12px; margin-bottom:1rem;
+      font-size:.82rem; line-height:1.65;
+    }
+    .reserved-notice-icon { font-size:1.3rem; flex-shrink:0; line-height:1; }
+
+    /* ─── Step panels ─── */
+    .step-panel { display:none; }
+    .step-panel.active { display:block; animation:stepIn .3s ease; }
+    @keyframes stepIn {
+      from { opacity:0; transform:translateX(10px); }
+      to   { opacity:1; transform:translateX(0);    }
+    }
+
+    .modal-title  { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; margin-bottom:.2rem; }
+    .modal-sub    { font-size:.78rem; color:var(--rose); margin-bottom:1.4rem; }
+    .modal-label  { display:block; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:.5rem; }
+    .modal-input  {
+      width:100%; padding:.75rem 1rem; border-radius:12px;
+      background:rgba(240,252,246,.9); border:1px solid rgba(42,82,64,.28);
+      color:var(--text); font-family:'Inter',sans-serif; font-size:.9rem;
+      outline:none; transition:border-color .2s ease; margin-bottom:1.25rem;
+      caret-color:var(--green);
+    }
+    .modal-input:focus { border-color:rgba(42,82,64,.65); }
+    .modal-input::placeholder { color:rgba(42,82,64,.42); }
+
+    .modal-actions { display:flex; gap:.65rem; margin-top:1.1rem; }
+
+    .btn-cancel-res {
+      flex:1; padding:.7rem;
+      border-radius:12px;
+      background:rgba(239,68,68,.08);
+      border:1px solid rgba(239,68,68,.2);
+      color:rgba(185,28,28,.75);
+      font-size:.75rem; cursor:pointer; transition:all .2s;
+    }
+    .btn-cancel-res:hover { background:rgba(239,68,68,.15); border-color:rgba(239,68,68,.35); }
+
+    .btn-close {
+      flex:1; padding:.7rem;
+      border-radius:12px;
+      background:rgba(220,245,232,.55);
+      border:1px solid rgba(42,82,64,.22);
+      color:var(--muted);
+      font-size:.75rem; cursor:pointer; transition:all .2s;
+    }
+    .btn-close:hover { background:rgba(220,245,232,.9); color:var(--text); }
+
+    .btn-next {
+      flex:2; padding:.7rem; border-radius:12px;
+      background: linear-gradient(135deg, rgba(42,82,64,.32), rgba(78,143,106,.22));
+      border:1px solid rgba(42,82,64,.52);
+      color:var(--rose); font-size:.8rem; font-weight:500;
+      cursor:pointer; transition:all .2s;
+    }
+    .btn-next:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(42,82,64,.48), rgba(78,143,106,.35));
+    }
+    .btn-next:disabled { opacity:.4; cursor:not-allowed; }
+
+    /* ─── Step 2 elements ─── */
+    .mini-label {
+      font-size:.58rem; letter-spacing:.15em; text-transform:uppercase;
+      color:var(--muted); margin-bottom:.4rem;
+    }
+
+    /* ─── Finalize card (store + delivery unified) ─── */
+    .finalize-card {
+      border-radius: 16px; overflow: hidden; margin-bottom: .9rem;
+    }
+    .store-logo-area {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: .45rem;
+      min-height: 72px; padding: .85rem 1rem;
+      text-decoration: none; cursor: pointer;
+      transition: background .2s ease;
+    }
+    .store-logo-area:hover { background: rgba(42,82,64,.08); }
+    .store-logo-img {
+      max-height: 48px; max-width: 150px; object-fit: contain;
+      filter: brightness(1.02) drop-shadow(0 1px 6px rgba(30,70,45,.15));
+    }
+    .store-name-fallback {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 300; color: var(--muted);
+    }
+    .store-logo-hint {
+      font-size: .58rem; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(42,82,64,.75);
+    }
+    .finalize-sep {
+      height: 1px; background: rgba(42,82,64,.16); margin: 0 1rem;
+    }
+    .finalize-body {
+      padding: .75rem 1rem .9rem;
+    }
+    .finalize-instructions {
+      font-size: .8rem; line-height: 1.75; color: var(--text);
+      margin-bottom: .65rem;
+    }
+    .delivery-label {
+      font-size: .58rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: .35rem;
+    }
+    .delivery-text { font-size: .78rem; line-height: 1.8; }
+    .finalize-intro {
+      font-size: .82rem; line-height: 1.75; color: var(--text);
+      margin-bottom: .85rem;
+    }
+
+    /* ─── Toast ─── */
+    .toast {
+      position:fixed; bottom:2rem; left:50%;
+      transform:translateX(-50%) translateY(120%);
+      z-index:300; padding:.6rem 1.3rem; border-radius:100px;
+      background:rgba(42,82,64,.92); border:1px solid rgba(42,82,64,.6);
+      color:#e8f4ee; font-size:.74rem; backdrop-filter:blur(22px);
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+      white-space:nowrap; pointer-events:none;
+      box-shadow: 0 4px 20px rgba(20,55,35,.22);
+    }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+    .toast.err  { background:rgba(140,20,20,.88); border-color:rgba(220,50,50,.5); color:#ffe8e8; }
+
+    /* ─── Footer ─── */
+    footer { text-align:center; padding:2rem 1.5rem 4rem; }
+    .footer-card { display:inline-block; padding:1.6rem 2.5rem; border-radius:20px; }
+    .footer-names { font-family:'Italianno', cursive; font-size:1.8rem; font-weight:400; margin-bottom:.35rem; line-height:1.1; }
+    .event-location-wrap {
+      display:flex; align-items:center; gap:.65rem;
+      padding:.55rem 1.2rem; border-radius:100px;
+    }
+    .event-location-pin { font-size:.9rem; flex-shrink:0; }
+    .event-venue-name {
+      font-size:.72rem; font-weight:500; color:var(--text); letter-spacing:.02em;
+    }
+    .event-venue-addr {
+      font-size:.64rem; color:var(--muted); margin-top:.1rem;
+    }
+    .footer-date  { font-size:.7rem; letter-spacing:.15em; color:var(--muted); }
+    .heart { color:var(--rose); }
+  </style>
+</head>
+<body>
+
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora-orb aurora-orb-1"></div>
+    <div class="aurora-orb aurora-orb-2"></div>
+    <div class="aurora-orb aurora-orb-3"></div>
+  </div>
+
+  <div class="page">
+
+    <!-- ══ HERO ══ -->
+    <section class="hero">
+      <p class="hero-eyebrow">✦ &nbsp; Chá de Casa Nova &nbsp; ✦</p>
+      <h1 class="couple-names">
+        Sóstenes
+        <span class="amp">&amp;</span>
+        Emilly
+      </h1>
+      <p class="hero-tagline">Venha celebrar conosco<br>o início do nosso lar</p>
+      <div class="glass event-pill">{{ config.get_event_date_display }}</div>
+      {% if config.event_venue or config.event_address %}
+      <div class="glass event-location-wrap">
+        <span class="event-location-pin">📍</span>
+        <div>
+          {% if config.event_venue %}<div class="event-venue-name">{{ config.event_venue }}</div>{% endif %}
+          {% if config.event_address %}<div class="event-venue-addr">{{ config.event_address }}</div>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+      <div class="countdown" id="countdown">
+        <div class="glass cd-item"><span class="cd-value" id="cd-days">--</span><span class="cd-label">Dias</span></div>
+        <div class="glass cd-item"><span class="cd-value" id="cd-hours">--</span><span class="cd-label">Horas</span></div>
+        <div class="glass cd-item"><span class="cd-value" id="cd-min">--</span><span class="cd-label">Min</span></div>
+        <div class="glass cd-item"><span class="cd-value" id="cd-sec">--</span><span class="cd-label">Seg</span></div>
+      </div>
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Lista de presentes</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ══ GIFTS ══ -->
+    <section class="gifts-section">
+      <div class="section-header">
+        <div class="divider"></div>
+        <p class="section-eyebrow">Lista de Presentes</p>
+        <h2 class="section-title">O que sonhamos</h2>
+        <p class="section-sub">Escolha um presente e reserve seu nome ✦</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats">
+        <div>
+          <div class="stat-val" id="stat-avail">{{ available_count }}</div>
+          <div class="stat-lbl">Disponíveis</div>
+        </div>
+        <div>
+          <div class="stat-val" id="stat-res">{{ reserved_count }}</div>
+          <div class="stat-lbl">Reservados</div>
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="filters">
+        <button class="f-tab active" data-filter="all">Todos</button>
+        <button class="f-tab" data-filter="available">Disponíveis</button>
+        <button class="f-tab" data-filter="reserved">Reservados</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="gift-grid" id="gift-grid">
+        {% for gift in gifts %}
+        <div
+          class="glass gift-card {{ gift.status }}"
+          id="gc-{{ gift.id }}"
+          data-status="{{ gift.status }}"
+          data-purchase-link="{{ gift.purchase_link|escapejs }}"
+          onclick="handleCardClick({{ gift.id }}, '{{ gift.name|escapejs }}', '{{ gift.status }}', '{{ gift.image_url|escapejs }}', '{{ gift.price_range|escapejs }}')"
+        >
+          <div class="card-img-wrap">
+            <img
+              src="{{ gift.image_url }}"
+              alt="{{ gift.name }}"
+              loading="lazy"
+              onerror="this.src='https://picsum.photos/seed/{{ gift.id }}gift/400/400'"
+            >
+            {% if gift.status != 'available' %}
+            <div class="badge-status reserved">⏳ Reservado</div>
+            {% endif %}
+          </div>
+          <div class="card-body">
+            <div class="card-name">{{ gift.name }}</div>
+            {% if gift.price_range %}<div class="card-price">{{ gift.price_range }}</div>{% endif %}
+            <button class="btn-buy" {% if gift.status != 'available' %}disabled{% endif %}>
+              {% if gift.status == 'available' %}Vou comprar{% else %}Reservado{% endif %}
+            </button>
+          </div>
+        </div>
+        {% empty %}
+        <div class="glass empty-state">
+          <p>Nenhum presente cadastrado ainda.</p>
+          <p style="font-size:.75rem;margin-top:.5rem;">Adicione pelo <a href="/admin/" style="color:var(--rose);">admin</a>.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer>
+      <div class="glass footer-card">
+        <div class="footer-names">Sóstenes <span class="heart">♥</span> Emilly</div>
+        <div class="footer-date">{{ config.get_event_date_short }}</div>
+      </div>
+    </footer>
+
+  </div><!-- /page -->
+
+  <!-- ══ MODAL ══ -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="glass modal">
+
+      <!-- Step indicator: 2 steps -->
+      <div class="steps-bar">
+        <div class="step-item active" id="si-1">
+          <div class="step-num">1</div>
+          <div class="step-lbl">Reservar</div>
+        </div>
+        <div class="step-conn" id="sc-1"></div>
+        <div class="step-item" id="si-2">
+          <div class="step-num">2</div>
+          <div class="step-lbl">Finalizar</div>
+        </div>
+      </div>
+
+      <!-- Gift preview (shared, always visible while modal is open) -->
+      <div class="glass-inner modal-gift-preview" id="modal-gift-preview">
+        <img id="modal-gift-img-thumb" src="" alt="" class="modal-gift-img-thumb">
+        <div>
+          <div id="modal-gift-name-display" class="modal-gift-name-display"></div>
+          <div id="modal-gift-price-display" class="modal-gift-price-display"></div>
+        </div>
+      </div>
+
+      <!-- ── Step 1: Reservar ── -->
+      <div class="step-panel active" id="sp-1">
+        <h3 class="modal-title">Reservar presente</h3>
+        <label class="modal-label" for="buyer-name">Seu nome</label>
+        <input
+          type="text" id="buyer-name" class="modal-input"
+          placeholder="Como posso te chamar?"
+          autocomplete="name" maxlength="100"
+        >
+        <div class="modal-actions">
+          <button class="btn-close" onclick="closeModal()">Fechar</button>
+          <button class="btn-next" id="btn-reserve" onclick="reserveGift()">Reservar →</button>
+        </div>
+      </div>
+
+      <!-- ── Step 2: Finalizar ── -->
+      <div class="step-panel" id="sp-2">
+        <h3 class="modal-title">Finalizar</h3>
+
+        <p class="finalize-intro">
+          Você pode comprar este presente <strong>pelo link abaixo:</strong>
+        </p>
+
+        <!-- Card unificado: loja + instruções + endereço -->
+        <div class="finalize-card glass-inner">
+
+          <!-- Logomarca / link do produto -->
+          <a id="store-link" href="#" target="_blank" rel="noopener noreferrer" class="store-logo-area">
+            <img id="store-logo-img" src="" alt="" class="store-logo-img" style="display:none">
+            <span id="store-name-fallback" class="store-name-fallback"></span>
+            <span class="store-logo-hint">Ver produto online →</span>
+          </a>
+          <p class="finalize-body" style="font-size: xx-small; text-align: justify;">Caso prefira, você também pode adquiri-lo em qualquer <strong>loja física</strong> de sua preferência.</p>
+          <div class="finalize-sep"></div>
+
+          <div class="finalize-body">
+            <p class="finalize-instructions">
+              Você pode comprar o presente e <strong>trazer no dia do evento</strong>, ou enviar diretamente para o nosso endereço e a gente já recebe em casa:
+            </p>
+            <p class="delivery-label">📦 Endereço para envio</p>
+            <div id="delivery-info" class="delivery-text"></div>
+          </div>
+
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel-res" onclick="cancelReservation()">Cancelar Reserva</button>
+          <button class="btn-close" onclick="closeModal()">Fechar</button>
+        </div>
+      </div>
+
+      <!-- ── Painel de visualização (presente já reservado) ── -->
+      <div class="step-panel" id="sp-view">
+        <div class="reserved-notice glass-inner">
+          <span class="reserved-notice-icon">⏳</span>
+          <p>Este presente já está <strong>reservado</strong> e não está mais disponível para outros convidados.</p>
+        </div>
+
+        <a id="view-store-link" href="#" target="_blank" rel="noopener noreferrer" class="store-logo-area finalize-card glass-inner" style="display:none">
+          <span class="store-logo-hint">Ver produto online →</span>
+        </a>
+
+        <div class="modal-actions">
+          <button class="btn-close" style="flex:1" onclick="closeModal()">Fechar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ── Countdown ── */
+    (function () {
+      const target = new Date('{{ config.get_event_date_iso }}T00:00:00');
+      function tick() {
+        const diff = target - Date.now();
+        if (diff <= 0) {
+          document.getElementById('countdown').innerHTML =
+            '<div class="glass cd-item" style="padding:1rem 2rem"><span style="font-family:\'Cormorant Garamond\',serif;font-size:1.4rem;color:var(--rose)">É hoje! 🎉</span></div>';
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor(diff % 86400000 / 3600000);
+        const m = Math.floor(diff % 3600000 / 60000);
+        const s = Math.floor(diff % 60000 / 1000);
+        document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+        document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+        document.getElementById('cd-min').textContent   = String(m).padStart(2,'0');
+        document.getElementById('cd-sec').textContent   = String(s).padStart(2,'0');
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+
+    /* ── Filter tabs ── */
+    document.querySelectorAll('.f-tab').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.f-tab').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const f = this.dataset.filter;
+        document.querySelectorAll('.gift-card').forEach(card => {
+          card.style.display = (f === 'all' || card.dataset.status === f) ? '' : 'none';
+        });
+      });
+    });
+
+    /* ── State ── */
+    let activeGiftId   = null;
+    let activeGiftName = '';
+    let currentStep    = 1;
+    let hasReservation = false;
+
+    /* ── CSRF ── */
+    function csrf() {
+      const c = document.cookie.split(';').find(x => x.trim().startsWith('csrftoken='));
+      return c ? c.split('=')[1] : '';
+    }
+
+    /* ── Card click ── */
+    function handleCardClick(id, name, status, imageUrl, priceRange) {
+      activeGiftId   = id;
+      activeGiftName = name;
+      hasReservation = false;
+
+      _fillGiftPreview(name, imageUrl, priceRange);
+
+      if (status === 'available') {
+        document.querySelector('.modal').classList.remove('view-only');
+        document.getElementById('buyer-name').value = '';
+        goStep(1);
+        document.getElementById('modal-overlay').classList.add('open');
+        setTimeout(() => document.getElementById('buyer-name').focus(), 350);
+      } else {
+        // reserved or purchased: view-only
+        const card = document.getElementById(`gc-${id}`);
+        const link = card?.dataset.purchaseLink || '';
+        const viewLink = document.getElementById('view-store-link');
+        if (link) {
+          viewLink.href = link;
+          viewLink.style.display = '';
+        } else {
+          viewLink.style.display = 'none';
+        }
+        document.querySelector('.modal').classList.add('view-only');
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('sp-view').classList.add('active');
+        document.getElementById('modal-overlay').classList.add('open');
+      }
+    }
+
+    function _fillGiftPreview(name, imageUrl, priceRange) {
+      const thumb = document.getElementById('modal-gift-img-thumb');
+      thumb.src = imageUrl || '';
+      thumb.alt = name;
+      document.getElementById('modal-gift-name-display').textContent = name;
+      document.getElementById('modal-gift-price-display').textContent = priceRange || '';
+      document.getElementById('modal-gift-preview').style.display = imageUrl ? '' : 'none';
+    }
+
+    /* ── Step navigation (2 steps) ── */
+    function goStep(n) {
+      currentStep = n;
+      for (let i = 1; i <= 2; i++) {
+        const item = document.getElementById(`si-${i}`);
+        item.classList.toggle('active', i === n);
+        item.classList.toggle('done',   i < n);
+        document.getElementById(`sp-${i}`).classList.toggle('active', i === n);
+      }
+      document.getElementById('sc-1').classList.toggle('active', n >= 2);
+    }
+
+    /* ── Close modal ── */
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+    document.getElementById('modal-overlay').addEventListener('click', function (e) {
+      if (e.target === this) cancelReservation();
+    });
+    document.addEventListener('keydown', e => {
+      const open = document.getElementById('modal-overlay').classList.contains('open');
+      if (!open) return;
+      if (e.key === 'Escape') cancelReservation();
+      if (e.key === 'Enter' && currentStep === 1) reserveGift();
+    });
+
+    /* ── Step 1: Reserve ── */
+    async function reserveGift() {
+      const name = document.getElementById('buyer-name').value.trim();
+      if (!name) { toast('Informe seu nome.', true); document.getElementById('buyer-name').focus(); return; }
+
+      const btn = document.getElementById('btn-reserve');
+      btn.disabled = true; btn.textContent = '…';
+
+      try {
+        const res  = await fetch(`/presentes/${activeGiftId}/reservar/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf() },
+          body: JSON.stringify({ name }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          hasReservation = true;
+          markReserved(activeGiftId);
+          populateFinalize(data);
+          goStep(2);
+          refreshStats();
+        } else {
+          toast(data.error || 'Erro ao reservar.', true);
+        }
+      } catch { toast('Erro de conexão.', true); }
+      finally  { btn.disabled = false; btn.textContent = 'Reservar →'; }
+    }
+
+    /* ── Populate step 2 (Finalizar) ── */
+    function populateFinalize(data) {
+      const logoImg      = document.getElementById('store-logo-img');
+      const nameFallback = document.getElementById('store-name-fallback');
+
+      if (data.store_logo_url) {
+        logoImg.src = data.store_logo_url;
+        logoImg.alt = data.store_name || 'Loja';
+        logoImg.style.display = '';
+        nameFallback.style.display = 'none';
+      } else {
+        logoImg.style.display = 'none';
+        nameFallback.textContent = data.store_name || 'Ver produto';
+        nameFallback.style.display = '';
+      }
+
+      document.getElementById('store-link').href = data.purchase_link || '#';
+
+      const lines = data.delivery_lines || [];
+      document.getElementById('delivery-info').innerHTML = lines.length
+        ? lines.join('<br>')
+        : '<span style="color:var(--muted);font-style:italic">Endereço não configurado ainda.</span>';
+    }
+
+    /* ── Cancel reservation ── */
+    async function cancelReservation() {
+      if (!hasReservation) { closeModal(); return; }
+
+      try {
+        const res  = await fetch(`/presentes/${activeGiftId}/cancelar/`, {
+          method: 'POST',
+          headers: { 'X-CSRFToken': csrf() },
+        });
+        const data = await res.json();
+        if (data.success) {
+          markAvailable(activeGiftId);
+          closeModal();
+          toast('Reserva cancelada.');
+          refreshStats();
+        } else {
+          toast(data.error || 'Erro ao cancelar.', true);
+        }
+      } catch { toast('Erro de conexão.', true); }
+    }
+
+    /* ── Card state helpers ── */
+    function markReserved(id) {
+      const card = document.getElementById(`gc-${id}`);
+      if (!card) return;
+      card.dataset.status = 'reserved';
+      card.classList.replace('available', 'reserved');
+      _removeBadge(card);
+      const img = card.querySelector('.card-img-wrap');
+      const b = document.createElement('div');
+      b.className = 'badge-status reserved'; b.textContent = '⏳ Reservado';
+      img.appendChild(b);
+      const btn = card.querySelector('.btn-buy');
+      btn.textContent = 'Reservado'; btn.disabled = true;
+    }
+
+    function markAvailable(id) {
+      const card = document.getElementById(`gc-${id}`);
+      if (!card) return;
+      card.dataset.status = 'available';
+      const prev = card.classList.contains('reserved') ? 'reserved' : 'purchased';
+      card.classList.replace(prev, 'available');
+      _removeBadge(card);
+      const btn = card.querySelector('.btn-buy');
+      btn.textContent = 'Vou comprar'; btn.disabled = false;
+    }
+
+    function _removeBadge(card) { card.querySelector('.badge-status')?.remove(); }
+
+    /* ── Stats refresh ── */
+    function refreshStats() {
+      const all      = document.querySelectorAll('.gift-card');
+      const avail    = [...all].filter(c => c.dataset.status === 'available').length;
+      const reserved = [...all].filter(c => c.dataset.status !== 'available').length;
+      document.getElementById('stat-avail').textContent = avail;
+      document.getElementById('stat-res').textContent   = reserved;
+    }
+
+    /* ── Toast ── */
+    function toast(msg, isErr = false) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = 'toast' + (isErr ? ' err' : '');
+      el.offsetHeight;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3600);
+    }
+
+    /* ── Intersection observer for card animations ── */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.gift-card').forEach(c => {
+      c.style.animationPlayState = 'paused';
+      io.observe(c);
+    });
+  </script>
+</body>
+</html>
