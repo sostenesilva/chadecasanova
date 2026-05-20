@@ -598,14 +598,14 @@
             <div class="card-name">{{ gift.name }}</div>
             {% if gift.price_range %}<div class="card-price">{{ gift.price_range }}</div>{% endif %}
             <button class="btn-buy" {% if gift.status != 'available' %}disabled{% endif %}>
-              {% if gift.status == 'available' %}Vou comprar{% else %}Reservado{% endif %}
+              {% if gift.status == 'available' %}Escolher{% else %}Reservado{% endif %}
             </button>
           </div>
         </div>
         {% empty %}
         <div class="glass empty-state">
           <p>Nenhum presente cadastrado ainda.</p>
-          <p style="font-size:.75rem;margin-top:.5rem;">Adicione pelo <a href="/admin/" style="color:var(--rose);">admin</a>.</p>
+          <!-- <p style="font-size:.75rem;margin-top:.5rem;">Adicione pelo <a href="/admin/" style="color:var(--rose);">admin</a>.</p> -->
         </div>
         {% endfor %}
       </div>
@@ -657,8 +657,8 @@
           autocomplete="name" maxlength="100"
         >
         <div class="modal-actions">
-          <button class="btn-close" onclick="closeModal()">Fechar</button>
-          <button class="btn-next" id="btn-reserve" onclick="reserveGift()">Reservar →</button>
+          <button class="btn-close" onclick="closeModal()">Cancelar</button>
+          <button class="btn-next" id="btn-reserve" onclick="reserveGift()">Reservar</button>
         </div>
       </div>
 
@@ -666,7 +666,13 @@
       <div class="step-panel" id="sp-2">
         <h3 class="modal-title">Finalizar</h3>
 
-        <p class="finalize-intro">
+        <!-- Aviso de reservado (visível apenas no modo view-only) -->
+        <div class="reserved-notice glass-inner" id="sp2-reserved-notice" style="display:none">
+          <span class="reserved-notice-icon">⏳</span>
+          <p>Este presente já está <strong>Reservado</strong> e não está mais disponível para outros convidados.</p>
+        </div>
+
+        <p class="finalize-intro" id="finalize-intro-text">
           Você pode comprar este presente <strong>pelo link abaixo:</strong>
         </p>
 
@@ -679,38 +685,24 @@
             <span id="store-name-fallback" class="store-name-fallback"></span>
             <span class="store-logo-hint">Ver produto online →</span>
           </a>
-          <p class="finalize-body" style="font-size: xx-small; text-align: justify;">Caso prefira, você também pode adquiri-lo em qualquer <strong>loja física</strong> de sua preferência.</p>
-          <div class="finalize-sep"></div>
 
-          <div class="finalize-body">
-            <p class="finalize-instructions">
-              Você pode comprar o presente e <strong>trazer no dia do evento</strong>, ou enviar diretamente para o nosso endereço e a gente já recebe em casa:
-            </p>
-            <p class="delivery-label">📦 Endereço para envio</p>
-            <div id="delivery-info" class="delivery-text"></div>
+          <div id="finalize-delivery-section">
+            <p class="finalize-body" style="font-size: xx-small; text-align: justify;">Caso prefira, você também pode adquiri-lo em qualquer <strong>loja física</strong> de sua preferência.</p>
+            <div class="finalize-sep"></div>
+            <div class="finalize-body">
+              <p class="finalize-instructions">
+                Você pode comprar o presente e <strong>trazer no dia do evento</strong>, ou enviar diretamente para o nosso endereço e a gente já recebe em casa:
+              </p>
+              <p class="delivery-label">📦 Endereço para envio</p>
+              <div id="delivery-info" class="delivery-text"></div>
+            </div>
           </div>
 
         </div>
 
         <div class="modal-actions">
-          <button class="btn-cancel-res" onclick="cancelReservation()">Cancelar Reserva</button>
+          <button class="btn-cancel-res" id="btn-cancel-res-btn" onclick="cancelReservation()">Cancelar Reserva</button>
           <button class="btn-close" onclick="closeModal()">Fechar</button>
-        </div>
-      </div>
-
-      <!-- ── Painel de visualização (presente já reservado) ── -->
-      <div class="step-panel" id="sp-view">
-        <div class="reserved-notice glass-inner">
-          <span class="reserved-notice-icon">⏳</span>
-          <p>Este presente já está <strong>reservado</strong> e não está mais disponível para outros convidados.</p>
-        </div>
-
-        <a id="view-store-link" href="#" target="_blank" rel="noopener noreferrer" class="store-logo-area finalize-card glass-inner" style="display:none">
-          <span class="store-logo-hint">Ver produto online →</span>
-        </a>
-
-        <div class="modal-actions">
-          <button class="btn-close" style="flex:1" onclick="closeModal()">Fechar</button>
         </div>
       </div>
 
@@ -720,7 +712,11 @@
   <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  {{ config.get_full_address|json_script:"delivery-config-data" }}
+
   <script>
+    const PAGE_DELIVERY_LINES = JSON.parse(document.getElementById('delivery-config-data').textContent);
+
     /* ── Countdown ── */
     (function () {
       const target = new Date('{{ config.get_event_date_iso }}T00:00:00');
@@ -777,24 +773,38 @@
 
       if (status === 'available') {
         document.querySelector('.modal').classList.remove('view-only');
+        document.getElementById('sp2-reserved-notice').style.display = 'none';
+        document.getElementById('finalize-intro-text').style.display = '';
+        document.getElementById('finalize-delivery-section').style.display = '';
+        document.getElementById('btn-cancel-res-btn').style.display = '';
         document.getElementById('buyer-name').value = '';
         goStep(1);
         document.getElementById('modal-overlay').classList.add('open');
         setTimeout(() => document.getElementById('buyer-name').focus(), 350);
       } else {
-        // reserved or purchased: view-only
+        // reserved or purchased: abrir direto no step 2 (Finalizar) em modo view-only
         const card = document.getElementById(`gc-${id}`);
         const link = card?.dataset.purchaseLink || '';
-        const viewLink = document.getElementById('view-store-link');
-        if (link) {
-          viewLink.href = link;
-          viewLink.style.display = '';
-        } else {
-          viewLink.style.display = 'none';
-        }
+
+        const logoImg      = document.getElementById('store-logo-img');
+        const nameFallback = document.getElementById('store-name-fallback');
+        logoImg.style.display = 'none';
+        let storeName = 'Ver produto';
+        try { if (link) storeName = new URL(link).hostname.replace('www.', ''); } catch (e) {}
+        nameFallback.textContent = storeName;
+        nameFallback.style.display = '';
+        document.getElementById('store-link').href = link || '#';
+
+        document.getElementById('sp2-reserved-notice').style.display = 'flex';
+        document.getElementById('finalize-intro-text').style.display = 'none';
+        document.getElementById('btn-cancel-res-btn').style.display = 'none';
+        const deliveryEl = document.getElementById('delivery-info');
+        deliveryEl.innerHTML = PAGE_DELIVERY_LINES.length
+          ? PAGE_DELIVERY_LINES.join('<br>')
+          : '<span style="color:var(--muted);font-style:italic">Endereço não configurado ainda.</span>';
+
         document.querySelector('.modal').classList.add('view-only');
-        document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-        document.getElementById('sp-view').classList.add('active');
+        goStep(2);
         document.getElementById('modal-overlay').classList.add('open');
       }
     }
