@@ -1,0 +1,69 @@
+<h3 class="modal-title">Finalizar</h3>
+<p class="finalize-intro">
+  Você pode comprar este presente <strong>pelo link abaixo:</strong>
+</p>
+
+<div class="finalize-card glass-inner">
+  <a href="{{ gift.purchase_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="store-logo-area">
+    {% if gift.store and gift.store.logo %}
+      <img src="{{ gift.store.logo.url }}" alt="{{ gift.store.name }}" class="store-logo-img">
+    {% else %}
+      <span class="store-name-fallback">{{ gift.store.name|default:'Ver produto' }}</span>
+    {% endif %}
+    <span class="store-logo-hint">Ver produto online →</span>
+  </a>
+  <p class="finalize-body" style="font-size:xx-small;text-align:justify;">
+    Caso prefira, você também pode adquiri-lo em qualquer <strong>loja física</strong> de sua preferência.
+  </p>
+  <div class="finalize-sep"></div>
+  <div class="finalize-body">
+    <p class="finalize-instructions">
+      Você pode comprar o presente e <strong>trazer no dia do evento</strong>, ou enviar diretamente para o nosso endereço e a gente já recebe em casa:
+    </p>
+    <p class="delivery-label">📦 Endereço para envio</p>
+    <div class="delivery-text">
+      {% with lines=config.get_full_address %}
+        {% if lines %}
+          {% for line in lines %}{{ line }}<br>{% endfor %}
+        {% else %}
+          <span style="color:var(--muted);font-style:italic">Endereço não configurado ainda.</span>
+        {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+
+<div class="modal-actions">
+  <button class="btn-cancel-res"
+          hx-post="/presentes/{{ gift.id }}/cancelar/"
+          hx-target="body"
+          hx-swap="none">
+    Cancelar Reserva
+  </button>
+  <button class="btn-close" type="button" onclick="closeModal()">Fechar</button>
+</div>
+
+{# OOB: atualiza o card para reservado #}
+<div class="glass gift-card reserved"
+     id="gc-{{ gift.id }}"
+     data-status="reserved"
+     data-purchase-link="{{ gift.purchase_link }}"
+     data-store-logo="{% if gift.store and gift.store.logo %}{{ gift.store.logo.url }}{% endif %}"
+     data-store-name="{{ gift.store.name|default:'' }}"
+     onclick="handleCardClick({{ gift.id }}, '{{ gift.name|escapejs }}', 'reserved', '{{ gift.image_url|escapejs }}', '{{ gift.price_range|escapejs }}')"
+     hx-swap-oob="true">
+  <div class="card-img-wrap">
+    <img src="{{ gift.image_url }}" alt="{{ gift.name }}" loading="lazy"
+         onerror="this.src='https://picsum.photos/seed/{{ gift.id }}gift/400/400'">
+    <div class="badge-status reserved">⏳ Reservado</div>
+  </div>
+  <div class="card-body">
+    <div class="card-name">{{ gift.name }}</div>
+    {% if gift.price_range %}<div class="card-price">{{ gift.price_range }}</div>{% endif %}
+    <button class="btn-buy" disabled>Reservado</button>
+  </div>
+</div>
+
+{# OOB: atualiza contadores #}
+<div id="stat-avail" class="stat-val" hx-swap-oob="true">{{ available_count }}</div>
+<div id="stat-res" class="stat-val" hx-swap-oob="true">{{ reserved_count }}</div>

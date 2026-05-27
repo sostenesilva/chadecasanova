@@ -1,0 +1,22 @@
+<form id="reserve-form"
+      hx-post="/presentes/{{ pk }}/reservar/"
+      hx-target="#sp-2"
+      hx-swap="innerHTML">
+  {% csrf_token %}
+  <h3 class="modal-title">Reservar presente</h3>
+  {% if error %}
+  <div class="modal-error">{{ error }}</div>
+  {% endif %}
+  <label class="modal-label" for="buyer-name">Seu nome</label>
+  <input
+    type="text" id="buyer-name" name="name" class="modal-input"
+    placeholder="Como posso te chamar?"
+    autocomplete="name" maxlength="100"
+    value="{{ name|default:'' }}"
+    autofocus
+  >
+  <div class="modal-actions">
+    <button type="button" class="btn-close" onclick="closeModal()">Cancelar</button>
+    <button type="submit" class="btn-next" id="btn-reserve">Reservar →</button>
+  </div>
+</form>

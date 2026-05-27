@@ -1,0 +1,23 @@
+{# OOB: atualiza o card para disponível #}
+<div class="glass gift-card available"
+     id="gc-{{ gift.id }}"
+     data-status="available"
+     data-purchase-link="{{ gift.purchase_link }}"
+     data-store-logo="{% if gift.store and gift.store.logo %}{{ gift.store.logo.url }}{% endif %}"
+     data-store-name="{{ gift.store.name|default:'' }}"
+     onclick="handleCardClick({{ gift.id }}, '{{ gift.name|escapejs }}', 'available', '{{ gift.image_url|escapejs }}', '{{ gift.price_range|escapejs }}')"
+     hx-swap-oob="true">
+  <div class="card-img-wrap">
+    <img src="{{ gift.image_url }}" alt="{{ gift.name }}" loading="lazy"
+         onerror="this.src='https://picsum.photos/seed/{{ gift.id }}gift/400/400'">
+  </div>
+  <div class="card-body">
+    <div class="card-name">{{ gift.name }}</div>
+    {% if gift.price_range %}<div class="card-price">{{ gift.price_range }}</div>{% endif %}
+    <button class="btn-buy">Escolher</button>
+  </div>
+</div>
+
+{# OOB: atualiza contadores #}
+<div id="stat-avail" class="stat-val" hx-swap-oob="true">{{ available_count }}</div>
+<div id="stat-res" class="stat-val" hx-swap-oob="true">{{ reserved_count }}</div>
